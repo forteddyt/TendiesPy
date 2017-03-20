@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Python Tendies - Resteraunt Finder WebApp</title>
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="static/style.css">
+
+	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+ 
+<body>
+	<!-- Sidebar -->
+	<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%">
+	  <div data-role="page">
+  		<div data-role="header">
+  		  <h1>Filters</h1>
+	    </div>
+
+        <div data-role="main" class="ui-content">
+          <form method="post" action="/action_page_post.php">
+            <fieldset data-role="collapsible">
+              <legend>Click me - I'm collapsible!</legend>
+                <p>Favorite Color:</p>
+              <div data-role="controlgroup">
+                <label for="red">Red</label>
+                <input type="checkbox" name="favcolor" id="red" value="red">
+                <label for="green">Green</label>
+                <input type="checkbox" name="favcolor" id="green" value="green">
+                <label for="blue">Blue</label>
+                <input type="checkbox" name="favcolor" id="blue" value="blue">
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        
+      </div>
+	</div>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                    <li role="presentation"><a href="#">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="showSignUp">Sign Up</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Python Tendies</h3>
+        </div>
+
+        <div class="jumbotron" >
+            <h1>Bucket List App</h1>
+        </div>
+ 
+        <footer class="footer">
+            <p>&copy; Teddy Todorov - 2017</p>
+            <p>Find it on <a href="https://github.com/forteddyt/TendiesPy" target="_blank">GitHub!</a></p>
+        </footer>
+ 
+    </div>
+
+</body> 
+</html>
