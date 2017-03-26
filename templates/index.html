@@ -12,109 +12,130 @@
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
  
-<body style="padding: 0; margin: 0;">
+<body style="padding: 0; margin: 0; overflow: hidden;">
 	<!-- Sidebar -->
-	<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%;">
-  	  <div class="header" style="text-align: center; padding: 0; margin-top: .25rem;margin-bottom: .5rem;">
+	<div class="container" style="float: left; left: 0; max-width: 20%; padding: 0;">
+	  <div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
   	    <h3 style="font-size: 1.5rem; font-weight: 900 margin: .1rem">Filters</h3>
 	  </div>
-
-      <div data-role="main" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border-radius: 0px;">
-      	<fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
-          <legend>Attributes</legend>
-	      <input type="checkbox" id="aHot_and_New" name="attributes" />
-		  <label for="aHot_and_New">Hot and New Resteraunts</label>
-		  <input type="checkbox" id="aWaitlist" name="attributes" />
-		  <label for="aWaitlist">Online Waitlist</label>
-		  <input type="checkbox" id="aCashBack" name="attributes" />
-		  <label for="aCashBack">Cash Back</label>
-		  <input type="checkbox" id="aDeals" name="attributes" />
-		  <label for="aDeals">Deals</label>
-        </fieldset>
-        <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
-          <legend>Cuisine</legend>
-	      <input type="checkbox" id="cAmerican" name="cuisine" />
-		  <label for="cAmerican">American</label>
-	      <input type="checkbox" id="cChinese" name="cuisine" />
-		  <label for="cChinese">Chinese</label>
-	      <input type="checkbox" id="cFrench" name="cuisine" />
-		  <label for="cFrench">French</label>
-	      <input type="checkbox" id="cGreek" name="cuisine" />
-		  <label for="cGreek">Greek</label>
-	      <input type="checkbox" id="cIndian" name="cuisine" />
-		  <label for="cIndian">Indian</label>
-	      <input type="checkbox" id="cItalian" name="cuisine" />
-		  <label for="cItalian">Italian</label>
-	      <input type="checkbox" id="cJapanese" name="cuisine" />
-		  <label for="cJapanese">Japanese</label>
-	      <input type="checkbox" id="cMediterranean" name="cuisine" />
-		  <label for="cMediterranean">Mediterranean</label>
-		  <input type="checkbox" id="cMexican" name="cuisine" />
-		  <label for="cMexican">Mexican</label>
-	      <input type="checkbox" id="cSpanish" name="cuisine" />
-		  <label for="cSpanish">Spanish</label>
-	      <input type="checkbox" id="cThai" name="cuisine" />
-		  <label for="cThai">Thai</label>
-        </fieldset>
-        <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
-	      <legend>Location Range</legend>
-		  <input type="radio" id="l25" name="location" />
-		  <label for="l25">Under 25 miles</label>
-		  <input type="radio" id="l20" name="location" />
-		  <label for="l20">Under 20 miles</label>
-		  <input type="radio" id="l15" name="location" checked/>
-		  <label for="l15">Under 15 miles</label>
-		  <input type="radio" id="l10" name="location" />
-		  <label for="l10">Under 10 miles</label>
-		  <input type="radio" id="l5" name="location" />
-		  <label for="l5">Under 5 miles</label>
-	    </fieldset>
-	    <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
-	      <legend>Open Status</legend>
-		  <input type="checkbox" id="isOpen" name="open" />
-		  <label for="isOpen">Open Now</label>
-	    </fieldset>
-	    <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
-	      <legend>Pricing</legend>
-		  <input type="checkbox" id="pHigh" name="pricing" />
-		  <label for="pHigh">$$$$</label>
-		  <input type="checkbox" id="pMidHigh" name="pricing" />
-		  <label for="pMidHigh">$$$</label>
-		  <input type="checkbox" id="pMidLow" name="pricing" />
-		  <label for="pMidLow">$$</label>
-		  <input type="checkbox" id="pLow" name="pricing" />
-		  <label for="pLow">$</label>
-	    </fieldset>
-	    <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
-          <legend>Rating</legend>
-	      <input type="checkbox" id="r5" name="rating" />
-		  <label for="r5">5 Star</label>
-		  <input type="checkbox" id="r4" name="rating" />
-		  <label for="r4">4 Star</label>
-		  <input type="checkbox" id="r3" name="rating" />
-		  <label for="r3">3 Star</label>
-		  <input type="checkbox" id="r2" name="rating" />
-		  <label for="r2">2 Star</label>
-		  <input type="checkbox" id="r1" name="rating" />
-		  <label for="r1">1 Star</label>
-        </fieldset>
-      </div>
+	  <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%; height: 85%;">
+        <div data-role="main" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border-radius: 0px;">
+          <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
+            <legend>Attributes</legend>
+	        <input type="checkbox" id="aHot_and_New" name="attributes" />
+		    <label for="aHot_and_New">Hot and New Resteraunts</label>
+		    <input type="checkbox" id="aWaitlist" name="attributes" />
+		    <label for="aWaitlist">Online Waitlist</label>
+		    <input type="checkbox" id="aCashBack" name="attributes" />
+		    <label for="aCashBack">Cash Back</label>
+		    <input type="checkbox" id="aDeals" name="attributes" />
+		    <label for="aDeals">Deals</label>
+          </fieldset>
+          <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
+            <legend>Cuisine</legend>
+	        <input type="checkbox" id="cAmerican" name="cuisine" />
+		    <label for="cAmerican">American</label>
+	        <input type="checkbox" id="cChinese" name="cuisine" />
+		    <label for="cChinese">Chinese</label>
+	        <input type="checkbox" id="cFrench" name="cuisine" />
+		    <label for="cFrench">French</label>
+	        <input type="checkbox" id="cGreek" name="cuisine" />
+		    <label for="cGreek">Greek</label>
+	        <input type="checkbox" id="cIndian" name="cuisine" />
+		    <label for="cIndian">Indian</label>
+	        <input type="checkbox" id="cItalian" name="cuisine" />
+		    <label for="cItalian">Italian</label>
+	        <input type="checkbox" id="cJapanese" name="cuisine" />
+		    <label for="cJapanese">Japanese</label>
+	        <input type="checkbox" id="cMediterranean" name="cuisine" />
+		    <label for="cMediterranean">Mediterranean</label>
+		    <input type="checkbox" id="cMexican" name="cuisine" />
+		    <label for="cMexican">Mexican</label>
+	        <input type="checkbox" id="cSpanish" name="cuisine" />
+		    <label for="cSpanish">Spanish</label>
+	        <input type="checkbox" id="cThai" name="cuisine" />
+		    <label for="cThai">Thai</label>
+          </fieldset>
+          <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
+	        <legend>Location Range</legend>
+		    <input type="radio" id="l25" name="location" />
+		    <label for="l25">Under 25 miles</label>
+		    <input type="radio" id="l20" name="location" />
+		    <label for="l20">Under 20 miles</label>
+		    <input type="radio" id="l15" name="location" checked/>
+		    <label for="l15">Under 15 miles</label>
+		    <input type="radio" id="l10" name="location" />
+		    <label for="l10">Under 10 miles</label>
+		    <input type="radio" id="l5" name="location" />
+		    <label for="l5">Under 5 miles</label>
+	      </fieldset>
+	      <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
+	        <legend>Open Status</legend>
+		    <input type="checkbox" id="isOpen" name="open" />
+		    <label for="isOpen">Open Now</label>
+	      </fieldset>
+	      <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
+	        <legend>Pricing</legend>
+		    <input type="checkbox" id="pHigh" name="pricing" />
+		    <label for="pHigh">$$$$</label>
+		    <input type="checkbox" id="pMidHigh" name="pricing" />
+		    <label for="pMidHigh">$$$</label>
+		    <input type="checkbox" id="pMidLow" name="pricing" />
+		    <label for="pMidLow">$$</label>
+		    <input type="checkbox" id="pLow" name="pricing" />
+		    <label for="pLow">$</label>
+	      </fieldset>
+	      <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
+            <legend>Rating</legend>
+	        <input type="checkbox" id="r5" name="rating" />
+		    <label for="r5">5 Star</label>
+		    <input type="checkbox" id="r4" name="rating" />
+		    <label for="r4">4 Star</label>
+		    <input type="checkbox" id="r3" name="rating" />
+		    <label for="r3">3 Star</label>
+		    <input type="checkbox" id="r2" name="rating" />
+		    <label for="r2">2 Star</label>
+		    <input type="checkbox" id="r1" name="rating" />
+		    <label for="r1">1 Star</label>
+          </fieldset>
+        </div>
+	  </div>
+	  <button style="z-index: 1; position: absolute; max-width: 18%; bottom: 0; margin: 1%; height: 6%; font-weight: 900; padding: 0; font-size: 1.5rem;">Search</button>
 	</div>
-    <div class="container" style="margin-left: 20%; max-width: 80%; padding: 0;">
-        <div class="header" style="text-align: center; padding: 0; margin-top: .25rem; margin-bottom: .5rem;">
+
+    <div class="container" style="float: right; max-width: 20%; padding: 0;">
+    	<div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
+            <h3 style="font-size: 1.5rem; font-weight: 900 margin: .1rem">Chat Bot</h3>
+        </div>
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%; height: 60%;">
+            
+        </div>
+        <textarea style="z-index: 1; position: absolute; bottom: 35%; resize: none; max-width: 19%; margin: .5%;"></textarea>
+        <div class="w3-bar-block w3-light-grey" style="position: absolute; bottom: 0; height: 35%; width: 20%;">
+          <div class="w3-bar-block w3-light-grey" style="margin: 2%; height: 94%; border: 3px solid #424242; padding: 10px; text-align: center;">
+            <p style="font-weight: 900; font-size: 1.25rem;"><u>You can use the bot!</u></p>
+            <p>Here's how you use the bot...</p>
+            <p>Here's how you use the bot...</p>
+            <p>Here's how you use the bot...</p>
+            <p>Here's how you use the bot...</p>
+            <p>Here's how you use the bot...</p>
+            <p>Here's how you use the bot...</p>
+            <p>Here's how you use the bot...</p>
+          </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin:0 auto; padding: 0; max-width: 60%">
+        <div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
             <h3 class="text-muted" style="font-size: 1.5rem; font-weight: 900 margin: .1rem">Python Tendies - Resteraunt Finder WebApp</h3>
         </div>
 
-        <div class="jumbotron" style="max-height: 100%; margin: 10px;">
+        <div class="jumbotron" style="height: 100%; margin: 10px;">
             <h1>Bucket List App</h1>
         </div>
- 
-        <footer class="footer" style="position: absolute; bottom: 10px; width: 60%; text-align: center;">
-            <p>&copy; Teddy Todorov - 2017</p>
-            <p>Find it on <a href="https://github.com/forteddyt/TendiesPy" target="_blank">GitHub!</a></p>
+        <footer class="footer" style="position: absolute; padding-top: 5px; bottom: 0px; width: 60%; text-align: center;">
+            <p>&copy; Teddy Todorov - 2017 ~~ Find it on <a href="https://github.com/forteddyt/TendiesPy" target="_blank">GitHub!</a></p>
         </footer>
- 
     </div>
-
 </body> 
 </html>
