@@ -2,6 +2,15 @@
 <html lang="en">
  
 <head>
+	<style>
+		.result{
+			width: 2rem;
+			height: 1rem;
+			border: 3px;
+			border-color: solid black;
+			z-index: 2;
+		}
+	</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,10 +25,10 @@
 	<!-- Sidebar -->
 	<div class="container" style="float: left; left: 0; max-width: 20%; padding: 0;">
 	  <div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
-  	    <h3 style="font-size: 1.5rem; font-weight: 900 margin: .1rem">Filters</h3>
+  	    <h3 style="font-size: 125%; font-weight: 900 margin: .1rem">Filters</h3>
 	  </div>
-	  <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%; height: 85%;">
-        <div data-role="main" style="padding: 5px; margin: 0; border-radius: 0px;">
+	  <div class="w3-sidebar w3-light-grey w3-bar-block" style=" width:20%; height: 85%;">
+        <div data-role="w3-main" style=" padding: 5px; margin: 0; border-radius: 0px;">
           <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
             <legend>Attributes</legend>
 	        <input type="checkbox" id="aHot_and_New" name="attributes" />
@@ -99,13 +108,16 @@
 		    <label for="r1">1 Star</label>
           </fieldset>
         </div>
-	  </div>
-	  <button style="z-index: 1; position: absolute; max-width: 18%; bottom: 0; margin: 1%; height: 6%; font-weight: 900; padding: 0; font-size: 1.5rem;">Search</button>
+      </div>
+      <footer class="footer" style="position: absolute; padding-top: 1%; bottom: 0px; width: 20%; text-align: center;">
+		<button>Search</button>
+      </footer>
 	</div>
+
 
     <div class="container" style="float: right; max-width: 20%; padding: 0;">
     	<div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
-            <h3 style="font-size: 1.5rem; font-weight: 900 margin: .1rem">Chat Bot</h3>
+            <h3 style="font-size: 125%; font-weight: 900 margin: .1rem">Chat Bot</h3>
         </div>
         <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%; height: 60%;">
             
@@ -113,7 +125,7 @@
         <textarea style="z-index: 1; position: absolute; bottom: 35%; resize: none; max-width: 19%; margin: .5%;"></textarea>
         <div class="w3-bar-block w3-light-grey" style="position: absolute; bottom: 0; height: 35%; width: 20%;">
           <div class="w3-bar-block w3-light-grey" style="margin: 2%; height: 94%; border: 3px solid #424242; padding: 10px; text-align: center;">
-            <p style="font-weight: 900; font-size: 1.25rem;"><u>You can use the bot!</u></p>
+            <p style="font-weight: 900; font-size: 125%;"><u>You can use the bot!</u></p>
             <p>Here's how you use the bot...</p>
             <p>Here's how you use the bot...</p>
             <p>Here's how you use the bot...</p>
@@ -125,15 +137,30 @@
         </div>
     </div>
 
-    <div class="container" style="margin:0 auto; padding: 0; max-width: 60%">
+    <div class="container" style="margin:0 auto; padding: 0; max-width: 60%; max-height: 100%">
         <div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
-            <h3 class="text-muted" style="font-size: 1.5rem; font-weight: 900 margin: .1rem">Python Tendies - Resteraunt Finder WebApp</h3>
+            <h3 class="text-muted" style="font-size: 125%; font-weight: 900 margin: .1rem">Python Tendies - Resteraunt Finder WebApp</h3>
         </div>
 
-        <div class="jumbotron" style="height: 100%; margin: 10px;">
-            <h1>Bucket List App</h1>
+        <div class="jumbotron" style="min-height: 88vh; margin: 10px; padding: 10px;">
+            <div class="panel-group" id="results">
+			  <div class="panel panel-default" id="result1" style="height: 18vh; margin: 20px;">
+			    <div class="panel-body">Panel Content</div>
+			  </div>
+			  <div class="panel panel-default" id="result2" style="height: 18vh; margin: 20px;">
+			    <div class="panel-body">Panel Content</div>
+			  </div>
+			  <div class="panel panel-default" id="result3" style="height: 18vh; margin: 20px;">
+			    <div class="panel-body">Panel Content</div>
+			  </div>
+			  <div class="panel panel-default" id="result4" style="height: 18vh; margin: 20px;">
+			    <div class="panel-body">Panel Content</div>
+			  </div>
+<!-- 	  		  <button style="display: inline-block;" id="navBack">Back</button>
+	  		  <button style="display: inline-block;" id="navNext">Next</button> -->
+			</div>
         </div>
-        <footer class="footer" style="position: absolute; padding-top: 5px; bottom: 0px; width: 60%; text-align: center;">
+        <footer class="footer" style="position: absolute; padding-top: 1%; bottom: 0px; width: 60%; text-align: center;">
             <p>&copy; Teddy Todorov - 2017 ~~ Find it on <a href="https://github.com/forteddyt/TendiesPy" target="_blank">GitHub!</a></p>
         </footer>
     </div>
