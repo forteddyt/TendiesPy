@@ -18,9 +18,103 @@
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	<script type="text/javascript">
+	<script>
+	var fData;
+	var curPage = 0;
+
+	$(function() {
+      $('#filters_form').submit('click', function() {
+
+        $.getJSON('/_createPanels', {
+          formData: $('#filters_form').serialize()
+        }, function(data) {
+        	fData = data;
+        	if(Object.keys(fData).length == 0){
+        		alert("No results");
+        		// Have cleaner 'no results' notifier
+        	}else{
+        		curPage = 0;
+        		pagePanel(curPage);	
+        	}
+        });
+        return false;
+      });
+    });
+
+	function nextPage(){
+		// console.log("Next-ing...");
+		curPage++;
+		pagePanel(curPage);
+	}
+
+	function prevPage(){
+		// console.log("Previous-ing...");
+		curPage--;
+		pagePanel(curPage);
+	}
+
+	// Pages start at 0, goto fData size / 3
+    function pagePanel(pageNum= 0){
+    	// console.log("Moving to pageNum: " + pageNum);
+
+    	// console.log(Object.keys(fData).length);
+
+    	if(pageNum === 0 && Object.keys(fData).length > 3){
+    		document.getElementById("navBack").disabled = true;
+    		document.getElementById("navNext").disabled = false;
+    	}else if(pageNum != 0 && pageNum >= Object.keys(fData).length / 3 - 1){
+    		document.getElementById("navBack").disabled = false;
+    		document.getElementById("navNext").disabled = true;
+
+    	}else if(pageNum != 0 && pageNum < Object.keys(fData).length / 3 - 1){
+    		document.getElementById("navBack").disabled = false;
+    		document.getElementById("navNext").disabled = false;
+    	}else{
+    		document.getElementById("navBack").disabled = true;
+    		document.getElementById("navNext").disabled = true;
+    	}
+
+    	for(i = 3 * pageNum; i < 3 * pageNum + 3; i++){
+    		htmlLoc = i % 3 + 1;
+
+    		if(fData["result" + i] == null){
+    			document.getElementById("result" + htmlLoc).style.visibility = "hidden";
+    		}else{
+    			// console.log("Has result" + i);
+    			var curResult = fData["result" + i];
+    			document.getElementById("result" + htmlLoc).style.visibility = "visible";
+	    		document.getElementById("restName" + htmlLoc).textContent = curResult.name;
+	    		document.getElementById("rating" + htmlLoc).textContent = curResult.rating + " stars";
+	    		document.getElementById("phone" + htmlLoc).textContent = curResult.phone;
+	    		document.getElementById("pricing" + htmlLoc).textContent = curResult.price;
+	    		document.getElementById("categories" + htmlLoc).textContent = genCatString(curResult.categories);
+	    		document.getElementById("locAddress" + htmlLoc).textContent = genLocString(curResult.location);
+	    		document.getElementById("restImg" + htmlLoc).src = curResult.image_url;
+	    		document.getElementById("reviewCount" + htmlLoc).textContent = curResult.review_count;
+	    		// console.log("viewOnYelp" + i + "  -> " + curResult.url);
+	    		document.getElementById("viewOnYelp" + htmlLoc).onclick = function(){window.open(curResult.url);}
+	    	}
+    	}
+    }
+
+    function genLocString(locData){
+    	var locString = "";
+    	locString = locData['display_address'];
+    	return locString;
+    }
+
+    function genCatString(catData){
+    	var catString = "";
+    	for(catSet of catData){
+			catString = catString + catSet['title'] + ", ";
+    	}
+    	catString = catString.slice(0, -2);    	
+    	return catString;
+    }
 	</script>
+
 </head>
  
 <body style="padding: 0; margin: 0; overflow: hidden;">
@@ -29,61 +123,65 @@
 	  <div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
   	    <h3 style="font-size: 125%; font-weight: 900 margin: .1rem">Filters</h3>
 	  </div>
-	  <form action="test" method="GET" id="filters_form" name="filters_form" onsubmit="return true;">
+	  <form id="filters_form" name="filters_form">
 		  <div class="w3-sidebar w3-light-grey w3-bar-block" style=" width:20%; height: 85%;">
 	        <div data-role="w3-main" style=" padding: 5px; margin: 0; border-radius: 0px;">
 	          <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
 	            <legend>Attributes</legend>
-		        <label><input type="checkbox" id="aHot_and_New" name="aHot_and_New" autocomplete="off" />Hot and New Resteraunts</label>
-			    <label><input type="checkbox" id="aWaitlist" name="aWaitlist" autocomplete="off" />Online Waitlist</label>
-			    <label><input type="checkbox" id="aCashBack" name="aCashBack" autocomplete="off" />Cash Back</label>
-			    <label><input type="checkbox" id="aDeals" name="aDeals" autocomplete="off" />Deals</label>
+		        <label><input type="checkbox" name="attributes" value="hot_and_new"/>Hot and New Resteraunts</label>
+			    <label><input type="checkbox" name="attributes" value="waitlist_reservation"/>Online Waitlist</label>
+			    <label><input type="checkbox" name="attributes" value="cashback"/>Cash Back</label>
+			    <label><input type="checkbox" name="attributes" value="deals"/>Deals</label>
 	          </fieldset>
 	          <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
 	            <legend>Cuisine</legend>
-		        <label><input type="checkbox" id="cAmerican" name="cAmerican" />American</label>
-		        <label><input type="checkbox" id="cChinese" name="cChinese"/>Chinese</label>
-		        <label><input type="checkbox" id="cFrench" name="cFrench"/>French</label>
-		        <label><input type="checkbox" id="cGreek" name="cGreek"/>Greek</label>
-		        <label><input type="checkbox" id="cIndian" name="cIndian"/>Indian</label>
-		        <label><input type="checkbox" id="cItalian" name="cItalian" />Italian</label>
-		        <label><input type="checkbox" id="cJapanese" name="cJapanese"/>Japanese</label>
-		        <label><input type="checkbox" id="cMediterranean" name="cMediterranean"/>Mediterranean</label>
-			    <label><input type="checkbox" id="cMexican" name="cMexican" />Mexican</label>
-			    <label><input type="checkbox" id="cSpanish" name="cSpanish" />Spanish</label>
-			    <label><input type="checkbox" id="cThai" name="cThai" />Thai</label>
+		        <label><input type="checkbox" name="categories" value="newamerican"/>American (New)</label>
+		        <label><input type="checkbox" name="categories" value="tradamerican"/>American (Traditional)</label>
+		        <label><input type="checkbox" name="categories" value="chinese"/>Chinese</label>
+		        <label><input type="checkbox" name="categories" value="french"/>French</label>
+		        <label><input type="checkbox" name="categories" value="greek"/>Greek</label>
+		        <label><input type="checkbox" name="categories" value="indpak"/>Indian</label>
+		        <label><input type="checkbox" name="categories" value="italian"/>Italian</label>
+		        <label><input type="checkbox" name="categories" value="japanese"/>Japanese</label>
+		        <label><input type="checkbox" name="categories" value="mediterranean"/>Mediterranean</label>
+			    <label><input type="checkbox" name="categories" value="mexican"/>Mexican</label>
+			    <label><input type="checkbox" name="categories" value="spanish"/>Spanish</label>
+			    <label><input type="checkbox" name="categories" value="thai"/>Thai</label>
 	          </fieldset>
 	          <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
 		        <legend>Location Range</legend>
-			    <label><input type="radio" id="l25" name="location" value="l25" />Under 25 miles</label>
-			    <label><input type="radio" id="l20" name="location" value="l20" />Under 20 miles</label>
-			    <label><input type="radio" id="l15" name="location" value="l15" checked/>Under 15 miles</label>
-			    <label><input type="radio" id="l10" name="location" value="l10" />Under 10 miles</label>
-			    <label><input type="radio" id="l5" name="location" value="l5" />Under 5 miles</label>
+			    <label><input type="radio" name="radius" value="25" />Under 25 miles</label>
+			    <label><input type="radio" name="radius" value="20" />Under 20 miles</label>
+			    <label><input type="radio" name="radius" value="15" checked/>Under 15 miles</label>
+			    <label><input type="radio" name="radius" value="10" />Under 10 miles</label>
+			    <label><input type="radio" name="radius" value="5" />Under 5 miles</label>
 		      </fieldset>
 		      <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
 		        <legend>Open Status</legend>
-			    <label><input type="checkbox" id="isOpen" name="isOpen" />Open Now</label>
+			    <label><input type="checkbox" name="open_now" value="true" checked/>Open Now</label>
 		      </fieldset>
 		      <fieldset data-role="collapsible" data-collapsed="false" style="padding: 0px 0px 0px 0px; margin: 0px 0px 5px 0px;">
 		        <legend>Pricing</legend>
-			    <label><input type="checkbox" id="pHigh" name="p$$$$" />$$$$</label>
-			    <label><input type="checkbox" id="pMidHigh" name="p$$$" />$$$</label>
-			    <label><input type="checkbox" id="pMidLow" name="p$$" />$$</label>
-			    <label><input type="checkbox" id="pLow" name="p$" />$</label>
+			    <label><input type="checkbox" name="price" value="4"/>$$$$</label>
+			    <label><input type="checkbox" name="price" value="3"/>$$$</label>
+			    <label><input type="checkbox" name="price" value="2"/>$$</label>
+			    <label><input type="checkbox" name="price" value="1"/>$</label>
 		      </fieldset>
+		      <!-- 
+		      	Due to time constraints, this 'not-auto-included in Yelp Fusion' feature will be put off for now
 		      <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
 	            <legend>Rating</legend>
-		        <label><input type="checkbox" id="r5" name="r5" />5 star</label>
-			    <label><input type="checkbox" id="r4" name="r4" />4 star</label>
-			    <label><input type="checkbox" id="r3" name="r3" />3 star</label>
-			    <label><input type="checkbox" id="r2" name="r2" />2 star</label>
-			    <label><input type="checkbox" id="r1" name="r1" />1 star</label>
+		        <label><input type="checkbox" name="rating" value="5"/>5 star</label>
+			    <label><input type="checkbox" name="rating" value="4"/>4 star</label>
+			    <label><input type="checkbox" name="rating" value="3"/>3 star</label>
+			    <label><input type="checkbox" name="rating" value="2"/>2 star</label>
+			    <label><input type="checkbox" name="rating" value="1"/>1 star</label>
 	          </fieldset>
+	           -->
 	        </div>
 	      </div>
 	      <footer class="footer" style="position: absolute; padding-top: 1%; bottom: 0px; width: 20%; text-align: center;">
-			<button>Submit</button>
+			<button id="FilterSubmit">Submit</button>
 	      </footer>
       </form>
 	</div>
@@ -117,32 +215,154 @@
         </div>
 
         <div class="jumbotron" style="min-height: 88vh; max-height: 90vh; margin: 10px; padding: 10px;">
-            <div class="panel-group" id="results">
-			  <div class="panel panel-default" id="result1" style="height: 26vh; margin-bottom: 10px">
-			    <div class="panel-body">
-			    	Panel Content
-			    </div>
-			  </div>
-			  <div class="panel panel-default" id="result2" style="height: 26vh; margin-bottom: 10px" >
-				  <span id="restName2" style="font-weight: 900; font-size: 1.5rem;" class="title">Next Door Bake Shop</span>	    	
-			    <div>
-			    	<div style="float:right;">
-			    		<img id="restImg2" src="http://www.marshfield.net/photos/pano-birdhouses.jpg" style="max-width:14rem; max-height: 8.5rem;">
-			    		<div style="display: inline-block; margin-right: .5rem; margin-left: .5rem;">
-				    		<button><-</button>
-				    		<button>-></button>
+            <div class="panel-group">
+			  <div class="panel panel-default" id="result1" style="width: 100%; height: 26vh; margin-bottom: 10px; display: inline-grid; visibility: hidden;">
+				  <span class="header" id="restName1" style="font-weight: 900; padding-bottom: 0; font-size: 150%; display: block; margin-bottom: 0;"></span>	    	
+			    <div style="font-size: 110%">
+			    	<div style="float: left; width:10rem; margin-left: 1rem; display: inline-block;">
+			    		<div style="margin-bottom: .2rem">
+			    			<strong>Rating: </strong>
+				    		<span id="rating1"></span>
+			    		</div>
+			    		<div style="margin-bottom: .2rem">
+			    			-from
+				    		<span id="reviewCount1"></span>
+				    		reviews
+			    		</div>
+			    		<div style="margin-bottom: .2rem;">
+			    			<strong>Phone: </strong> 
+				    		<span id="phone1"></span>
+			    		</div>
+			    		<div style="margin-bottom: .2rem;">
+			    			<strong>Pricing: </strong> 
+				    		<span id="pricing1"></span>
+			    		</div>
+			    	</div>
+			    	<div style="float:right; display: inline-block;">
+			    		<img id="restImg1" style="margin-top: .25rem; margin-right: .25rem; max-width:14rem; max-height: 6.5rem;">
+			    		<!-- Too slow response times on detailed information has removed this -->
+			    		<!-- <div style="display: inline-block; margin-right: .5rem; margin-left: .5rem;">
+				    		<button id="backImg1"><-</button>
+				    		<button id="nextImg1">-></button>
+				    	</div> -->
+				    	<div style="margin-top: .3rem; margin-right: .25rem; max-width: 8rem;">
+				    		<button id="viewOnYelp1">View on Yelp</button>
 				    	</div>
+			    	</div>
+			    	<div style="margin-top: .25rem; max-width: 25rem; text-align: center; display: inline-block;">
+			    		<div style="margin-bottom: .25rem;">
+			    			<strong>Location: </strong>
+			    			<p style="margin-bottom: 0;" id="locAddress1"></p>
+			    		</div>
+			    		<div style="margin-bottom: .25rem;">
+		    				<a href="" id="getDir1">Get Directions</a>
+		    			</div>
+			    		<div style="display: inline-block;">
+			    			<strong>Categories: </strong>
+			    			<span id="categories1"></span>
+			    		</div>
 			    	</div>
 			    </div>
 			  </div>
-			  <div class="panel panel-default" id="result3" style="height: 26vh; margin: 0;">
-			    <div class="panel-body">
-			    	Panel Content
+			  <div class="panel panel-default" id="result2" style="width: 100%; height: 26vh; margin-bottom: 10px; display: inline-grid; visibility: hidden;">
+				  <span class="header" id="restName2" style="font-weight: 900; padding-bottom: 0; font-size: 150%; display: block; margin-bottom: 0;"></span>	    	
+			    <div style="font-size: 110%">
+			    	<div style="float: left; width:10rem; margin-left: 1rem; display: inline-block;">
+			    		<div style="margin-bottom: .2rem">
+			    			<strong>Rating: </strong>
+				    		<span id="rating2"></span>
+			    		</div>
+			    		<div style="margin-bottom: .2rem">
+			    			-from
+				    		<span id="reviewCount2"></span>
+				    		reviews
+			    		</div>
+			    		<div style="margin-bottom: .2rem;">
+			    			<strong>Phone: </strong> 
+				    		<span id="phone2"></span>
+			    		</div>
+			    		<div style="margin-bottom: .2rem;">
+			    			<strong>Pricing: </strong> 
+				    		<span id="pricing2"></span>
+			    		</div>
+			    	</div>
+			    	<div style="float:right; display: inline-block;">
+			    		<img id="restImg2" style="margin-top: .25rem; margin-right: .25rem; max-width:14rem; max-height: 6.5rem;">
+			    		<!-- Too slow response times on detailed information has removed this -->
+			    		<!-- <div style="display: inline-block; margin-right: .5rem; margin-left: .5rem;">
+				    		<button id="backImg2"><-</button>
+				    		<button id="nextImg2">-></button>
+				    	</div> -->
+				    	<div style="margin-top: .3rem; margin-right: .3rem; max-width: 8rem;">
+				    		<button id="viewOnYelp2">View on Yelp</button>
+				    	</div>
+			    	</div>
+			    	<div style="margin-top: .25rem; max-width: 25rem; text-align: center; display: inline-block;">
+			    		<div style="margin-bottom: .25rem;">
+			    			<strong>Location: </strong>
+			    			<p style="margin-bottom: 0;" id="locAddress2"></p>
+			    		</div>
+			    		<div style="margin-bottom: .25rem;">
+		    				<a href="" id="getDir2">Get Directions</a>
+		    			</div>
+			    		<div style="display: inline-block;">
+			    			<strong>Categories: </strong>
+			    			<span id="categories2"></span>
+			    		</div>
+			    	</div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default" id="result3" style="width: 100%; height: 26vh; margin-bottom: 10px; display: inline-grid; visibility: hidden;" >
+				  <span class="header" id="restName3" style="font-weight: 900; padding-bottom: 0; font-size: 150%; display: block; margin-bottom: 0;"></span>	    	
+			    <div style="font-size: 110%">
+			    	<div style="float: left; width:10rem; margin-left: 1rem; display: inline-block;">
+			    		<div style="margin-bottom: .2rem">
+			    			<strong>Rating: </strong>
+				    		<span id="rating3"></span>
+			    		</div>
+			    		<div style="margin-bottom: .2rem">
+			    			-from
+				    		<span id="reviewCount3"></span>
+				    		reviews
+			    		</div>
+			    		<div style="margin-bottom: .2rem;">
+			    			<strong>Phone: </strong> 
+				    		<span id="phone3"></span>
+			    		</div>
+			    		<div style="margin-bottom: .2rem;">
+			    			<strong>Pricing: </strong> 
+				    		<span id="pricing3"></span>
+			    		</div>
+			    	</div>
+			    	<div style="float:right; display: inline-block;">
+			    		<img id="restImg3" style="margin-top: .25rem; margin-right: .25rem; max-width:14rem; max-height: 6.5rem;">
+			    		<!-- Too slow response times on detailed information has removed this -->
+			    		<!-- <div style="display: inline-block; margin-right: .5rem; margin-left: .5rem;">
+				    		<button id="backImg3"><-</button>
+				    		<button id="nextImg3">-></button>
+				    	</div> -->
+				    	<div style="margin-top: .3rem; margin-right: .3rem; max-width: 8rem;">
+				    		<button id="viewOnYelp3">View on Yelp</button>
+				    	</div>
+			    	</div>
+			    	<div style="margin-top: .25rem; max-width: 25rem; text-align: center; display: inline-block;">
+			    		<div style="margin-bottom: .25rem;">
+			    			<strong>Location: </strong>
+			    			<p style="margin-bottom: 0;" id="locAddress3"></p>
+			    		</div>
+			    		<div style="margin-bottom: .25rem;">
+		    				<a href="" id="getDir3">Get Directions</a>
+		    			</div>
+			    		<div style="display: inline-block;">
+			    			<strong>Categories: </strong>
+			    			<span id="categories3"></span>
+			    		</div>
+			    	</div>
 			    </div>
 			  </div>
 			  <div class="button-box col-lg-12">
-					<a class="btn btn-info" role="button" style="float:left; margin-top: 1%; padding-top: .4rem; padding-bottom: .4rem; width: 9rem;" id="navBack">Back</a>
-					<a class="btn btn-info" role="button" style="float:right; margin-top: 1%; padding-top: .4rem; padding-bottom: .4rem; width: 9rem;" id="navNext">Next</a>
+					<button class="btn btn-info" style="float:left; margin-top: 0%; padding-top: .25rem; padding-bottom: .25rem; width: 7rem;" id="navBack" onclick="prevPage();" disabled>Back</button>
+					<button class="btn btn-info" style="float:right; margin-top: 0%; padding-top: .25rem; padding-bottom: .25rem; width: 7rem;" id="navNext" onclick="nextPage();" disabled>Next</button>
 			  </div>
 			</div>
         </div>
