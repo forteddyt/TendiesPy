@@ -32,7 +32,7 @@ CLIENT_SECRET = getConfidentials()['CLIENT_SECRET']
 
 # Default Search API params, in case their missing in order request
 # The "location" name is missing because it will be obtained via Google API
-SEARCH_DEFAULTS={"radius" : "10", "limit" : "50", "term" : "food"}
+SEARCH_DEFAULTS={"radius" : "10", "limit" : "32", "term" : "food"}
 
 # Determines if the waiter should get detailed information on resteraunts
 GET_DETAILED = False
