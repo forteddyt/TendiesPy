@@ -32,7 +32,7 @@ CLIENT_SECRET = getConfidentials()['CLIENT_SECRET']
 
 # Default Search API params, in case their missing in order request
 # The "location" name is missing because it will be obtained via Google API
-SEARCH_DEFAULTS={"radius" : "10", "limit" : "18"}
+SEARCH_DEFAULTS={"radius" : "10", "limit" : "50", "term" : "food"}
 
 # Determines if the waiter should get detailed information on resteraunts
 GET_DETAILED = False
@@ -247,7 +247,7 @@ def plateOrder(data):
 	plate = {}
 	# The items that will get packaged and sent back to the client
 	# These are the items that are in the request
-	panelItems = ['price', 'rating', 'phone', 'categories', 'name', 'url', 'location', 'image_url', 'coordinates', 'review_count']
+	panelItems = ['price', 'rating', 'phone', 'categories', 'name', 'url', 'location', 'image_url', 'coordinates', 'review_count', 'distance']
 	# print("Plating order...")
 
 	# print("DATA")
@@ -260,7 +260,14 @@ def plateOrder(data):
 		curRest = plate['result' + str(index)]
 		for item in panelItems:
 			if rest.get(item) != None and rest.get(item) != '':
-				curRest.update({item : rest[item]})
+				if(item == 'distance'):
+					meterDis = rest[item]
+					mileDis = meterDis * 0.000621371 # One meter is approx <- many miles
+					mileDis = round(mileDis, 2)
+					mileDis = str(mileDis) + " miles"
+					curRest.update({item : mileDis})
+				else:
+					curRest.update({item : rest[item]})
 			else:
 				print("Setting " + item + " to 'No Info'")
 				curRest.update({item : 'No Info'})

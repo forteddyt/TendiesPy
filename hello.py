@@ -40,7 +40,8 @@ def createPanels():
 	return jsonify(results)
 
 def serializeToDict(serializedForm):
-	requiredKeys = ["attributes", "categories", "location", "open_now", "price"]
+	print("Converting form to dict")
+	requiredKeys = ["attributes", "categories", "location", "open_now", "price", "sort_by"]
 
 	myForm = {}
 
@@ -51,7 +52,7 @@ def serializeToDict(serializedForm):
 		value = itemContents[1]
 
 		# print(key + " -> " + value)
-	
+
 		if myForm.get(key) != None:
 			myForm[key].append(value)
 		else:
