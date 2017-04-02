@@ -81,7 +81,7 @@
 
 		document.getElementById("navBack").disabled = true;
 		document.getElementById("navNext").disabled = true;
-		
+
 		//If on first page and more than 3 results, be able to go next
     	if (pageNum === 0 && Object.keys(fData).length - 1 > 3){
     		document.getElementById("navNext").disabled = false;
@@ -115,10 +115,14 @@
 	    		document.getElementById("distance" + htmlLoc).textContent = curResult.distance;
 	    		document.getElementById("reviewCount" + htmlLoc).textContent = curResult.review_count;
 	    		// console.log("viewOnYelp" + i + "  -> " + curResult.url);
-	    		document.getElementById("viewOnYelp" + htmlLoc).onclick = function(){window.open(curResult.url);}
+	    		document.getElementById("viewOnYelp" + htmlLoc).onclick = openClick.bind(null, curResult.url);
 	    		document.getElementById("getDir" + htmlLoc).href = "https://www.google.com/maps/dir/Current+Location/" + curResult.coordinates.latitude + "," + curResult.coordinates.longitude;
 	    	}
     	}
+    }
+
+    function openClick(url){
+    	window.open(url, '_blank');
     }
 
     function genLocString(locData){
