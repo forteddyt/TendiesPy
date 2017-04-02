@@ -135,10 +135,10 @@ def filterJSON(params):
 
 	# print("Loc1")
 	if(params['location'] == "" and params['longitude'] == "" and params['latitude'] == ""):
-		send_url = 'http://freegeoip.net/json'
-		req = requests.get(send_url).json()
-		params['latitude'] = req['latitude']
-		params['longitude'] = req['longitude']
+		myLoc = getGeoLoc()
+		params['latitude'] = myLoc['latitude']
+		params['longitude'] = myLoc['longitude']
+		# print("GEOLOC" + str(myLoc))
 
 	# print("Loc2")
 	filterList = []
@@ -246,11 +246,12 @@ def reserveTable(param):
 def plateOrder(data):
 	plate = {}
 	# The items that will get packaged and sent back to the client
+	# These are the items that are in the request
 	panelItems = ['price', 'rating', 'phone', 'categories', 'name', 'url', 'location', 'image_url', 'coordinates', 'review_count']
 	# print("Plating order...")
 
-	print("DATA")
-	print(data)
+	# print("DATA")
+	# print(data)
 
 	for index, rest in enumerate(data['businesses']):
 		# print("Index : " + str(index))
@@ -268,11 +269,28 @@ def plateOrder(data):
 			curRest.update({'photos' : rest['photos']})
 			curRest.update({'hours' : rest['hours']})
 
-	# print("Plated order:")
-	# for plateItem in plate:
-	# 	print(plateItem + " -> " + str(plate[plateItem]) + "\n")
+	extraItems = ['curLoc']
+
+	myLoc = getGeoLoc()
+	print("CURLOC -> " + str(myLoc))
+	plate.update({'curLoc' : myLoc});
+
+	print("Plated order:")
+	for plateItem in plate:
+		print(plateItem + " -> " + str(plate[plateItem]) + "\n")
 
 	return plate
+
+# Stores geo location info
+geoLoc = {};
+def getGeoLoc():
+	global geoLoc
+	if geoLoc == {}:
+		send_url = 'http://freegeoip.net/json'
+		geoLoc = requests.get(send_url).json()
+		return geoLoc
+	else:
+		return geoLoc
 
 def greet():
 	print("Hello, User\n\n")

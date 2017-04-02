@@ -95,6 +95,12 @@
 	    		document.getElementById("reviewCount" + htmlLoc).textContent = curResult.review_count;
 	    		// console.log("viewOnYelp" + i + "  -> " + curResult.url);
 	    		document.getElementById("viewOnYelp" + htmlLoc).onclick = function(){window.open(curResult.url);}
+	    		if(curResult.coordinates.latitude == "" or curResult.coordinates.longitude == ""){
+	    			document.getElementById("getDir" + htmlLoc).textContent = "No location data";
+	    			document.getElementById("getDir" + htmlLoc).href = "";
+	    		}else{
+	    			document.getElementById("getDir" + htmlLoc).href = "https://www.google.com/maps/dir/Current+Location/" + curResult.coordinates.latitude + "," + curResult.coordinates.longitude;
+	    		}
 	    	}
     	}
     }
@@ -255,7 +261,7 @@
 			    			<p style="margin-bottom: 0;" id="locAddress1"></p>
 			    		</div>
 			    		<div style="margin-bottom: .25rem;">
-		    				<a href="" id="getDir1">Get Directions</a>
+		    				<a target="_blank" href="#" id="getDir1">Get Directions</a>
 		    			</div>
 			    		<div style="display: inline-block;">
 			    			<strong>Categories: </strong>
@@ -303,7 +309,7 @@
 			    			<p style="margin-bottom: 0;" id="locAddress2"></p>
 			    		</div>
 			    		<div style="margin-bottom: .25rem;">
-		    				<a href="" id="getDir2">Get Directions</a>
+		    				<a target="_blank" href="#" id="getDir2">Get Directions</a>
 		    			</div>
 			    		<div style="display: inline-block;">
 			    			<strong>Categories: </strong>
@@ -351,7 +357,7 @@
 			    			<p style="margin-bottom: 0;" id="locAddress3"></p>
 			    		</div>
 			    		<div style="margin-bottom: .25rem;">
-		    				<a href="" id="getDir3">Get Directions</a>
+		    				<a target="_blank" href="#" id="getDir3">Get Directions</a>
 		    			</div>
 			    		<div style="display: inline-block;">
 			    			<strong>Categories: </strong>
