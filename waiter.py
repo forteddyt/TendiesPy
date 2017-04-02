@@ -247,7 +247,7 @@ def plateOrder(data):
 	plate = {}
 	# The items that will get packaged and sent back to the client
 	# These are the items that are in the request
-	panelItems = ['price', 'rating', 'phone', 'categories', 'name', 'url', 'location', 'image_url', 'coordinates', 'review_count', 'distance']
+	panelItems = ['price', 'rating', 'display_phone', 'categories', 'name', 'url', 'location', 'image_url', 'coordinates', 'review_count', 'distance']
 	# print("Plating order...")
 
 	# print("DATA")
