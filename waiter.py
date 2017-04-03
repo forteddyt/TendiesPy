@@ -207,6 +207,9 @@ def orderResteraunts(params):
 # Takes in the raw request.form format and parses the data
 # After parsing the data, the waiter orders the resteraunts
 def reserveTable(param):
+	# Clears previously-contained info
+	clearInfo()
+
 	# The default JSON Object
 	order = {
 		"term": "",
@@ -229,8 +232,10 @@ def reserveTable(param):
 		for item in param[key]:
 			# print("setting -> " + str(item))
 			itemList = itemList + str(item) + ","
-		
-		order[key] = itemList[:-1]
+		if key == 'rating':
+			setStarFilter(param[key])
+		else:
+			order[key] = itemList[:-1]
 
 	# print(order)
 
@@ -253,9 +258,17 @@ def plateOrder(data):
 	# print("DATA")
 	# print(data)
 
-	for index, rest in enumerate(data['businesses']):
+	index = 0
+	for rest in data['businesses']:
 		# print("Index : " + str(index))
 		# print(str(rest) + "\n\n")
+
+		# Exempts resteraunts with ratings under the starFilter
+		if str(rest['rating'])[0] not in getStarFilter():
+			# print(str(rest['rating'])[0] + " is not in " + str(getStarFilter()))
+			# print("continuing...")
+			continue
+
 		plate['result' + str(index)] = {}
 		curRest = plate['result' + str(index)]
 		for item in panelItems:
@@ -276,15 +289,17 @@ def plateOrder(data):
 			curRest.update({'photos' : rest['photos']})
 			curRest.update({'hours' : rest['hours']})
 
+		index = index + 1
+
 	extraItems = ['curLoc']
 
 	myLoc = getGeoLoc()
-	print("CURLOC -> " + str(myLoc))
-	plate.update({'curLoc' : myLoc});
+	# print("CURLOC -> " + str(myLoc))
+	# plate.update({'curLoc' : myLoc});
 
-	print("Plated order:")
-	for plateItem in plate:
-		print(plateItem + " -> " + str(plate[plateItem]) + "\n")
+	# print("Plated order:")
+	# for plateItem in plate:
+	# 	print(plateItem + " -> " + str(plate[plateItem]) + "\n")
 
 	return plate
 
@@ -298,6 +313,27 @@ def getGeoLoc():
 		return geoLoc
 	else:
 		return geoLoc
+
+# Stores the star filter info
+starFilter = []
+def setStarFilter(starList):
+	global starFilter
+	for item in starList:
+		starFilter.append(item)
+
+def getStarFilter():
+	global starFilter
+	if len(starFilter) == 0:
+		starFilter = ['5', '4', '3', '2', '1']
+	return starFilter
+
+# Clears the various stored infos
+def clearInfo():
+	global geoLoc
+	global starFilter
+
+	geoLoc = {}
+	starFilter = []
 
 def greet():
 	print("Hello, User\n\n")
