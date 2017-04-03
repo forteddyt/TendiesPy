@@ -108,7 +108,20 @@
 	    		document.getElementById("restName" + htmlLoc).textContent = curResult.name;
 	    		document.getElementById("rating" + htmlLoc).textContent = curResult.rating + " stars";
 	    		document.getElementById("phone" + htmlLoc).textContent = curResult.display_phone;
-	    		document.getElementById("pricing" + htmlLoc).textContent = curResult.price;
+	    		switch(curResult.price){
+	    			case "$":
+	    				document.getElementById("pricing" + htmlLoc).textContent = "Under $10";
+	    				break;
+	    			case "$$":
+	    				document.getElementById("pricing" + htmlLoc).textContent = "$11 - $30";
+	    				break;
+	    			case "$$$":
+	    				document.getElementById("pricing" + htmlLoc).textContent = "$31 - $60";
+	    				break;
+	    			case "$$$$":
+	    				document.getElementById("pricing" + htmlLoc).textContent = "Above $61";
+	    				break;
+	    		}
 	    		document.getElementById("categories" + htmlLoc).textContent = genCatString(curResult.categories);
 	    		document.getElementById("locAddress" + htmlLoc).textContent = genLocString(curResult.location);
 	    		document.getElementById("restImg" + htmlLoc).src = curResult.image_url;
@@ -165,6 +178,7 @@
 		        <label><input type="checkbox" name="categories" value="tradamerican"/>American (Traditional)</label>
 		        <label><input type="checkbox" name="categories" value="burgers"/>Burgers</label>
 		        <label><input type="checkbox" name="categories" value="chinese"/>Chinese</label>
+		        <label><input type="checkbox" name="categories" value="hotdogs"/>Fast Food</label>
 		        <label><input type="checkbox" name="categories" value="french"/>French</label>
 		        <label><input type="checkbox" name="categories" value="greek"/>Greek</label>
 		        <label><input type="checkbox" name="categories" value="indpak"/>Indian</label>
