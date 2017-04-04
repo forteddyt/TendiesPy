@@ -1,13 +1,14 @@
 from flask import Flask, url_for, session, request, redirect, jsonify
 from flask import render_template
 import waiter
+import waiterBot
 import json
 
 application = Flask(__name__)
 
 @application.route('/')
 def main():
-	print("HELLO FORTEDDYT")
+	# print("HELLO FORTEDDYT")
 	return render_template('index.html')
 
 def getFilters():
@@ -17,6 +18,9 @@ def getFilters():
 def createPanels():
 	waiter.greet()
 	serializedForm = request.args.get('formData', 0)
+
+	print("My serialized form...")
+	print(serializedForm)
 
 	myForm = serializeToDict(serializedForm)
 
@@ -39,6 +43,16 @@ def createPanels():
 	results = waiter.reserveTable(myForm)
 
 	return jsonify(results)
+
+@application.route('/_queryBot', methods=['GET'])
+def queryBot():
+	waiterBot.greet()
+	myString = request.args.get('textData', 0)
+
+	result = waiterBot.callBot(myString)
+
+	print(result)
+	return jsonify(result)
 
 def serializeToDict(serializedForm):
 	print("Converting form to dict")

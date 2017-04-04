@@ -75,11 +75,6 @@
 		pagePanel(curPage);
 	}
 
-
-	$("#FilterSubmit").click(function () {
-	    $(".overlay").show();
-	});
-
 	// Pages start at 0, goto fData size / 3
     function pagePanel(pageNum= 0){
     	// console.log("Moving to pageNum: " + pageNum);
@@ -157,6 +152,59 @@
     	catString = catString.slice(0, -2);    	
     	return catString;
     }
+
+    $(document).keypress(function(e) {
+	    if(e.which == 13) {
+	    	e.preventDefault();
+	    	botTextData = document.getElementById("botText").value;
+	    	if(botTextData == null || botTextData == "" || botTextData == false){
+	    		return;
+	    	}
+		    document.getElementById("botText").value = "";
+	        $.getJSON('/_queryBot', {
+	        	'textData' : botTextData
+	        }, function(data) {
+	        	if(data.type == "ERR"){
+	        		setBotText("ERR: " + data.resp);
+	        	}else if (data.type == "SUC"){
+	        		setBotText(data.resp);
+	        	}else if (data.type == "SRCH"){
+	        		setBotText(data.resp);
+
+	        		// Unfortunately, I wasn't able to implement searching
+
+	        		// var botData = data.filters;
+	        		// $.getJSON('/_createPanels', {
+			        // 	formData: botData
+			        // }, function(data) {
+				      	// document.getElementById("loading").style.display = "none";
+			      		// $('#FilterSubmit').attr('disabled', false);
+			      		// setBotText("Search completed. If you see no results, it is possible that there was an error processing your request.")
+			        // 	fData = data;
+			        // 	// console.log(fData);
+			        // 	// console.log(Object.keys(fData).length);
+			        // 	if(Object.keys(fData).length == 0){
+			        // 		document.getElementById("noResults").style.display = "block";
+			        // 		curPage = 0;
+			        // 		pagePanel(curPage);
+			        // 		// alert("No results");
+			        // 		// Have cleaner 'no results' notifier
+			        // 	}else{
+			        // 		curPage = 0;
+			        // 		pagePanel(curPage);
+			        // 	}
+			        // });
+	        	}else{
+	        		setBotText("BEEP BOOP! " + data.type + " IS NOT RECOGNIZED, BOOP BEEP!");
+	        	}
+	        });
+	    }
+	});
+
+	function setBotText(params){
+		// console.log(params);
+		document.getElementById("botResp").innerHTML = params;
+	}
 	</script>
 
 </head>
@@ -172,7 +220,7 @@
 	        <div data-role="w3-main" style=" padding: 5px; margin: 0; border-radius: 0px;">
 	          <fieldset data-role="collapsible" data-collapsed="false" style="margin: 0px 0px 5px 0px;">
 	            <legend>Attributes</legend>
-		        <label><input type="checkbox" name="attributes" value="hot_and_new"/>Hot and New Resteraunts</label>
+		        <label><input type="checkbox" name="attributes" value="hot_and_new"/>Hot and New Restaurants</label>
 			    <label><input type="checkbox" name="attributes" value="waitlist_reservation"/>Online Waitlist</label>
 			    <label><input type="checkbox" name="attributes" value="cashback"/>Cash Back</label>
 			    <label><input type="checkbox" name="attributes" value="deals"/>Deals</label>
@@ -243,27 +291,26 @@
 
     <div class="container" style="float: right; max-width: 20%; padding: 0;">
     	<div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
-            <h3 style="font-size: 125%; font-weight: 900 margin: .1rem">Chat Bot</h3>
+            <h3 style="font-size: 125%; font-weight: 900 margin: .1rem">Waiter Bot</h3>
         </div>
-        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%; height: 60%;">
-            
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="padding: 15px; width:20%; height: 60%;">
+            <span><strong>Waiter Bot Response: </strong></span><br>
+            <span id="botResp"></span>
         </div>
-        <textarea style="z-index: 1; position: absolute; bottom: 35%; resize: none; max-width: 19%; margin: .5%;"></textarea>
+        <textarea style="z-index: 1; position: absolute; bottom: 35%; resize: none; max-width: 19%; margin: .5%;" id="botText"></textarea>
         <div class="w3-bar-block w3-light-grey" style="position: absolute; bottom: 0; height: 35%; width: 20%;">
           <div class="w3-bar-block w3-light-grey" style="margin: 2%; height: 94%; border: 3px solid #424242; padding: 10px; text-align: center;">
-            <p style="font-weight: 900; font-size: 125%;"><u>You can use the bot!</u></p>
-            <p>Here's how you use the bot...</p>
-            <p>Here's how you use the bot...</p>
-            <p>Here's how you use the bot...</p>
-            <p>Here's how you use the bot...</p>
-            <p>Here's how you use the bot...</p>
+            <p style="font-weight: 900; font-size: 125%;"><u>Try the Waiter Bot!</u></p>
+            <p>The Waiter Bot is a very limited, proof of concept, bot. Searching through the Waiter Bot has not been implemented.</p>
+            <p>Most functionality is explained through invoking various 'tasks'</p>
+            <p>Start by typing in 'help' into the text box and go from there!</p>
           </div>
         </div>
     </div>
 
     <div class="container" style="margin:0 auto; padding: 0; max-width: 60%; max-height: 100%">
         <div class="header" style="text-align: center; padding: 0; margin: 0; margin-bottom: .5rem; height: 5%;">
-            <h3 class="text-muted" style="font-size: 125%; font-weight: 900 margin: .1rem">Flask Tendies - Resteraunt Finder WebApp</h3>
+            <h3 class="text-muted" style="font-size: 125%; font-weight: 900 margin: .1rem">Flask Tendies - Restaurant Finder WebApp</h3>
         </div>
 
         <div class="jumbotron" style="min-height: 88vh; max-height: 90vh; margin: 10px; padding: 10px;">
