@@ -3,16 +3,16 @@ from flask import render_template
 import waiter
 import json
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route('/')
+@application.route('/')
 def main():
 	return render_template('index.html')
 
 def getFilters():
 	return redirect('/')
 
-@app.route('/_createPanels', methods=['GET'])
+@application.route('/_createPanels', methods=['GET'])
 def createPanels():
 	waiter.greet()
 	serializedForm = request.args.get('formData', 0)
@@ -54,7 +54,7 @@ def serializeToDict(serializedForm):
 		# print(key + " -> " + value)
 
 		if myForm.get(key) != None:
-			myForm[key].append(value)
+			myForm[key].applicationend(value)
 		else:
 			if key == "radius" or key == "open_now":
 				temp = value
@@ -78,5 +78,5 @@ def isJsonable(x):
 		return False
 
 if __name__ == '__main__':
-	app.debug = True
-	app.run()
+	application.debug = True
+	application.run()
