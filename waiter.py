@@ -27,8 +27,8 @@ except ImportError:
 	from urllib import quote
 	from urllib import urlencode
 
-CLIENT_ID = getConfidentials()['CLIENT_ID']
-CLIENT_SECRET = getConfidentials()['CLIENT_SECRET']
+CLIENT_ID = "nf0VkrB0AvtelUi2Kw7jeg"
+CLIENT_SECRET = "eDfVrcuufFnZdc3alRdBJoCUWc1NUC5bZ2TlPL8gQJks0GWS56pQo1UNCIjPUX4v"
 
 # Default Search API params, in case their missing in order request
 # The "location" name is missing because it will be obtained via Google API
