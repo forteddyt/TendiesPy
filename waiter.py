@@ -90,8 +90,8 @@ def request(bearer_token, host = API_HOST, url_params=None):
 		'Authorization': 'Bearer %s' % bearer_token,
 	}
 
-	print(u'Querying {0} ...'.format(urlSearch))
-	print(u'~~~Querying {0} ...'.format(urlBusiness))
+	# print(u'Querying {0} ...'.format(urlSearch))
+	# print(u'~~~Querying {0} ...'.format(urlBusiness))
 
 	resteraunts = requests.request('GET', urlSearch, headers=headers, params=url_params).json()
 	# print("Resteraunts... ->")

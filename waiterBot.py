@@ -44,7 +44,7 @@ def search(*args):
 	global filters
 	global defaultFilters
 
-	print(filters["resp"])
+	# print(filters["resp"])
 
 	return {"type" : "SRCH", "resp" : "Beep Boop... Searching has not been implemented... Waiter Bot is sorry... Boop", "filters" : filters["resp"]}
 	# filters = dict(defaultFilters)
@@ -188,11 +188,11 @@ call_definitions = {'cuisine' : ["--cuisine [-r] cuis1[, cuis2, ...]--", "Add or
 					'attributes' : ['--attributes [-r] attr1[, attr2, ...]--', "Add or remove the specified attributes to the Filter. Remove attributes by including the '-r' tag before listing attributes. Attributes can be seperated by commas."],
 					'show' : ["--show [filter]--", "This task will show the selected option for the given [filter] thus far. If a [filter] is not given, then it will display all filters."],
 					'search' : ["--search--", "Tell Waiter Bot to take search for the given Filters that he has so far. Filters reset after search."],
-					'help' : ["--help {task}--", "This task provides a helpful message for tasks that the Waiter Bot can do. Calling help {task} prints help information for the WaiterBot's {task}'. A blank {task} will show available tasks."]
+					'help' : ["--help {task}--", "This task provides a helpful message for tasks that the Waiter Bot can do. Calling help {task} displays help information for the WaiterBot's {task}'. A blank {task} will show available tasks."]
 					}
 
 def greet():
-	print("Beep. Hello, user. Boop")
+	# print("Beep. Hello, user. Boop")
 
 formatCallDefinitions()
 def callBot(param):
@@ -201,13 +201,13 @@ def callBot(param):
 		given = given.replace(" ", ",", 1)
 		item = given.split(",")
 
-		print("-- Calling task...")
+		# print("-- Calling task...")
 		if item[0] != '':
 			task = item[0].lower()
 			args = item[1:]
 			response = call_list.get(task)(*args)
-			print(response)
-			print("-- Returning task...")
+			# print(response)
+			# print("-- Returning task...")
 			return response
 	except TypeError as e:
 		return({"type" : "ERR", "resp" : "The " + task.lower() + " task not found"})
