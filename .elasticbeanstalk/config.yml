@@ -2,6 +2,8 @@ branch-defaults:
   ebDeploy:
     environment: flask-tendies
     group_suffix: null
+  master:
+    environment: flask-tendies
 environment-defaults:
   flask-env:
     branch: ebDeploy

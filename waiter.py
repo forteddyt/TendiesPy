@@ -2,6 +2,7 @@
 
 # Client_id and client_secret kept in a .gitignore-ed JSON file on local machine
 # This method gets them
+# IMPORTANT -- No longer in use
 def getConfidentials():
 	with open('confidentials.json') as data_file:
 		data = json.load(data_file)
