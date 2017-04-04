@@ -55,7 +55,7 @@ def serializeToDict(serializedForm):
 		# print(key + " -> " + value)
 
 		if myForm.get(key) != None:
-			myForm[key].applicationend(value)
+			myForm[key].append(value)
 		else:
 			if key == "radius" or key == "open_now":
 				temp = value

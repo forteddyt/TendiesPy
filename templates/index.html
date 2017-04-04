@@ -37,16 +37,22 @@
 	$(function() {
       $('#filters_form').submit('click', function() {
       	$('#FilterSubmit').attr('disabled', true);
+      	document.getElementById("noResults").style.display = "none";
+      	document.getElementById("loading").style.display = "block";
 
         $.getJSON('/_createPanels', {
-          formData: $('#filters_form').serialize()
+        	formData: $('#filters_form').serialize()
         }, function(data) {
+	      	document.getElementById("loading").style.display = "none";
       		$('#FilterSubmit').attr('disabled', false);
         	fData = data;
+        	// console.log(fData);
+        	// console.log(Object.keys(fData).length);
         	if(Object.keys(fData).length == 0){
+        		document.getElementById("noResults").style.display = "block";
         		curPage = 0;
         		pagePanel(curPage);
-        		alert("No results");
+        		// alert("No results");
         		// Have cleaner 'no results' notifier
         	}else{
         		curPage = 0;
@@ -77,9 +83,6 @@
 	// Pages start at 0, goto fData size / 3
     function pagePanel(pageNum= 0){
     	// console.log("Moving to pageNum: " + pageNum);
-
-    	console.log(Object.keys(fData).length);
-
 
 		document.getElementById("navBack").disabled = true;
 		document.getElementById("navNext").disabled = true;
@@ -249,8 +252,6 @@
         <div class="w3-bar-block w3-light-grey" style="position: absolute; bottom: 0; height: 35%; width: 20%;">
           <div class="w3-bar-block w3-light-grey" style="margin: 2%; height: 94%; border: 3px solid #424242; padding: 10px; text-align: center;">
             <p style="font-weight: 900; font-size: 125%;"><u>You can use the bot!</u></p>
-            <p>Here's how you use the bot...</p>
-            <p>Here's how you use the bot...</p>
             <p>Here's how you use the bot...</p>
             <p>Here's how you use the bot...</p>
             <p>Here's how you use the bot...</p>
@@ -429,6 +430,12 @@
 			  </div>
 			</div>
         </div>
+
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: block;">
+        	<h1 id="noResults" style="border: 2px solid black; padding: 20px;"><strong>NO RESULTS</strong></h1>
+        	<img id="loading" hidden src="/static/images/loading.gif">
+        </div>
+
         <footer class="footer" style="position: absolute; padding-top: 1%; bottom: 0px; width: 60%; text-align: center;">
             <p>&copy; Teddy Todorov - 2017 ~~ Find it on <a href="https://github.com/forteddyt/TendiesPy" target="_blank">GitHub!</a></p>
         </footer>
