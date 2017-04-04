@@ -44,11 +44,13 @@
       		$('#FilterSubmit').attr('disabled', false);
         	fData = data;
         	if(Object.keys(fData).length == 0){
+        		curPage = 0;
+        		pagePanel(curPage);
         		alert("No results");
         		// Have cleaner 'no results' notifier
         	}else{
         		curPage = 0;
-        		pagePanel(curPage);	
+        		pagePanel(curPage);
         	}
         });
         return false;
