@@ -19,8 +19,8 @@ def createPanels():
 	waiter.greet()
 	serializedForm = request.args.get('formData', 0)
 
-	# print("My serialized form...")
-	# print(serializedForm)
+	print("My serialized form...")
+	print(serializedForm)
 
 	myForm = serializeToDict(serializedForm)
 
@@ -51,11 +51,11 @@ def queryBot():
 
 	result = waiterBot.callBot(myString)
 
-	# print(result)
+	print(result)
 	return jsonify(result)
 
 def serializeToDict(serializedForm):
-	# print("Converting form to dict")
+	print("Converting form to dict")
 	requiredKeys = ["attributes", "categories", "location", "open_now", "price", "sort_by"]
 
 	myForm = {}
